@@ -7,7 +7,7 @@ class Quiz(Assessment):
 
 
     def display_info(self):
-        print(f"Quiz : {self.title}and the score : {self.max_score}")
+        print(f"Quiz : {self.title}and the score is : {self.max_score}")
 
 
     def grade_massage(self, score):
