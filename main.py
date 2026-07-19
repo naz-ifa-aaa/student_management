@@ -125,8 +125,9 @@ def main():
             if course_code not in gb.grades[student_id]:
                 gb.grades[student_id][course_code] = {}
 
-            gb.grades[student_id][course_code][title] = score
-            print("Grade recorded successfully!")
+            gb.record_grade(student_id,course_code,title,score)
+            print("Grades recorded!")
+
 
         elif choice == "6":
             print("\n---Step 6: student report card---")
