@@ -9,6 +9,7 @@
 ## How to run the project 
 ### To run this project , first, make sure you have python installed on you system. Open your terminal in the project directory and run the whole projects in file main.
 ## Which classes you created 
+### I created 7 classes for these system which they are Student, Course, Assessment, GradeBook,Quiz, Exam,and Project. Before I forgot I would like to mention that Quiz, Exam , and Project these are the child class of Assessment class.In these three classes I used inheritance and overriding.
 
 ## Where you used encapsulation 
 ### I used encapsulation in Student class to make student's name and ID private.
