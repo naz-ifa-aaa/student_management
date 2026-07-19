@@ -17,7 +17,7 @@ class CourseClass:
 
     def add_assessment( self ,assessment):
         self.assessment.append(assessment)
-        print(f"The assessment {assessment} has been added to the course")
+        print(f"The assessment {assessment.title} has been added to the course")
 
 
     def find_assessment( self , title):
