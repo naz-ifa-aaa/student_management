@@ -10,7 +10,7 @@ class Quiz(Assessment):
         print(f"Quiz : {self.title}and the score is : {self.max_score}")
 
 
-    def grade_massage(self, score):
+    def grade_message(self, score):
         percentage = self.calculate_percentage(score)
         if percentage >=70:
             return "Great quiz result"
