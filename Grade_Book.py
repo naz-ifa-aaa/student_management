@@ -107,7 +107,7 @@ class GradeBook:
 
             for title,score in grades_dict.items():
                 max_score = 100
-                for asm in course.assessments:
+                for asm in course.assessment:
                     if asm.title == title:
                         max_score = asm.max_score
                         break
