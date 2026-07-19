@@ -38,7 +38,7 @@ class GradeBook:
         if course_code not in self.courses:
             print("Error: Course does not exist.")
             return
-        self.courses[course_code].assessments.append(assessment)
+        self.courses[course_code].assessment.append(assessment)
         print(f"Assessment {assessment}added to course {course_code} .")
 
     def record_grade(self,student_id,course_code,assessment_title,score):
@@ -51,7 +51,10 @@ class GradeBook:
         if course_code not in self.enrollments[student_id]:
             print("Error: Student is not enrolled in this course.")
             return
-        if assessment_title not in self.courses[course_code].assessments:
+        course_assessments = self.courses[course_code].assessment
+        assessment_titles =[asm.title for asm in course_assessments]
+
+        if assessment_title not in assessment_titles:
             print("Error: Assessment does not exist in this course.")
             return
         self.grades[student_id][course_code][assessment_title] = score
@@ -68,7 +71,7 @@ class GradeBook:
         return sum(scores)/len(scores)
 
     def get_result(self,average):
-        return "Passed" if average >= self.passing_grade else "Failed"
+        return "Passed" if average >= 50 else "Failed"
 
     def get_letter_grade(self, average):
         if average >= 90: return "A"
@@ -84,27 +87,48 @@ class GradeBook:
             return
 
         student = self.students[student_id]
-        print(f"\n---reported for {student.name},{student_id}---")
-        enrolled_course = self.enrollments.get(student_id,[])
+        print(f"\n---Student Report---")
+        print(f"Student ID: {student_id}")
+        print(f"Name: {student.get_name}")
+        print(f" Email: {student.email}")
 
+        enrolled_course = self.enrollments.get(student_id,[])
         if not enrolled_course:
             print("Not enrolled in any courses.")
             return
 
         for course_code in enrolled_course:
             course = self.courses[course_code]
-            average = self.calculate_average(student_id,course_code)
-            letter = self.get_letter_grade(average)
-            status = self.get_result(average)
+            print(f"Course : {course.course_code}_{course.course_name}")
+            print("\nGrades:")
 
-            print(f"Course:{course.name} ({course_code})")
-            print(f"Grades: {dict(self.grades[student_id][course_code])}")
-            print(f"Average: {average:.2f}, Letter: {letter}, Status: {status}")
+            grades_dict= self.grades.get(student_id,{}).get(course_code,{})
+            course_scores = []
+
+            for title,score in grades_dict.items():
+                max_score = 100
+                for asm in course.assessments:
+                    if asm.title == title:
+                        max_score = asm.max_score
+                        break
+                percentage = score/max_score*100
+                course_scores.append(percentage)
+                print(f"{title}:{score}/{max_score} = {percentage:.0f}%")
+            if course_scores:
+                average = sum(course_scores)/len(course_scores)
+                letter = self.get_letter_grade(average)
+                status = self.get_result(average)
+
+                print(f"\n   Average : {average:.2f}%")
+                print(f"   Letter Grade: {letter}")
+                print(f"   Result: {status}")
+            else:
+                print(f"\n   No grades recorded for this course.")
 
     def search_student(self,keyword):
         result = []
         for student_id,student in self.students.items():
-            if keyword.lower() in student_id.lower() or keyword.lower in student.name.lower():
+            if keyword.lower() in student_id.lower() or keyword.lower in student.get_name.lower():
                 result.append(student)
         if not result:
             print(f"No student found matching {keyword}.")
