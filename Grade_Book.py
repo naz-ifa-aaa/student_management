@@ -128,12 +128,12 @@ class GradeBook:
     def search_student(self,keyword):
         result = []
         for student_id,student in self.students.items():
-            if keyword.lower() in student_id.lower() or keyword.lower in student.get_name().lower():
+            if keyword.lower() in student_id.lower() or keyword.lower in student.get_name.lower():
                 result.append(student)
         if not result:
             print(f"No student found matching {keyword}.")
         for student in result:
-            print(f"Found: ID:{student.student_id}, Name:{student.name}")
+            print(f"Found: ID:{student.student_id}, Name:{student.get_name}")
 
 
     def delete_student(self,student_id):
